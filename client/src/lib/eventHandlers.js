@@ -8,11 +8,11 @@ let eventHandlers = {
   addCow: (data) => {
     return axios.post('/cows', data);
   },
-  updateCow: (data) => {
-    return axios.put('/cows', data)
+  updateCow: (id, data) => {
+    return axios.put(`/cows/${id}`, data);
   },
   deleteCow: (id) => {
-    return axios.delete(`/cows/${id}`)
+    return axios.delete(`/cows/${id}`);
   }
 };
 

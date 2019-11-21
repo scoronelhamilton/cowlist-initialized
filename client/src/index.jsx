@@ -54,7 +54,7 @@ class App extends React.Component {
     let newName = prompt('Enter new name');
     let newDescription = prompt('Enter new description ');
     let newCow = {
-      id: id,
+      id: cow.id,
       name: newName,
       description: newDescription
     };
@@ -69,7 +69,7 @@ class App extends React.Component {
       }
     }
 
-    eventHandlers.updateCow(newCow)
+    eventHandlers.updateCow(id, newCow)
     .then(() => {
       newCowList[cowPosition] = newCow;
       this.setState({

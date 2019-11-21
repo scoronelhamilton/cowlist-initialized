@@ -24,8 +24,9 @@ module.exports = {
       });
     },
     put: (req, res) => {
+      let id = req.params.id
       let data = req.body
-      models.cows.update(data, (error) => {
+      models.cows.update(id, data, (error) => {
         if (error) {
           console.log(error);
           res.sendStatus(404);
@@ -35,7 +36,6 @@ module.exports = {
       })
     },
     delete: (req, res) => {
-      console.log("here")
       let id = req.params.id
       models.cows.delete(id, (error) => {
         if (error) {
