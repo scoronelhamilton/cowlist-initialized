@@ -14,7 +14,7 @@ module.exports = {
     },
     post: (req, res) => {
       let cowInfo = req.body;
-      models.cows.save(cowInfo, (error, results) => {
+      models.cows.save(cowInfo, (error) => {
         if ( error ) {
           console.log(error);
           res.sendStatus(500);
@@ -22,6 +22,17 @@ module.exports = {
           res.status(201).send(req.body)
         }
       });
+    },
+    delete: (req, res) => {
+      let id = req.body.id
+      models.cows.delete(id, (error) => {
+        if (error) {
+          console.log(error);
+          res.sendStatus(404);
+        } else {
+          res.sendStatus(200)
+        }
+      })
     }
   }
 }

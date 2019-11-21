@@ -7,6 +7,11 @@ let eventHandlers = {
   
   addCow: (data) => {
     return axios.post('/cows', data);
+  },
+  deleteCow: (id) => {
+    return axios.delete('/cows', {
+      data: {id: id}
+    })
   }
 };
 

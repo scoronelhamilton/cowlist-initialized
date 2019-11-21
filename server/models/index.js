@@ -9,6 +9,8 @@ module.exports = {
       db.query('INSERT INTO cows(name, description) VALUES (?, ?)', [cowInfo.name, cowInfo.description], done)
     },
     update: 'update model',
-    delete: 'delete model'
+    delete: (id, done) => {
+      db.query('DELETE FROM cows WHERE id = ?', [id], done)
+    }
     }
 }
