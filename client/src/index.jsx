@@ -17,6 +17,7 @@ class App extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateElement = this.updateElement.bind(this);
     this.deleteElement = this.deleteElement.bind(this);
   }
 
@@ -29,9 +30,10 @@ class App extends React.Component {
   }
 
   handleSubmit(data) {
-    eventHandlers.addCow(data).then((response) => {
-      let newCowList = this.state.cowList.slice();
-      newCowList.push(response.data);
+    eventHandlers.addCow(data)
+    .then(() => {return eventHandlers.searchCows()})
+    .then((response) => {
+      let newCowList = response.data;
 
       this.setState({
         cowList: newCowList
@@ -45,6 +47,37 @@ class App extends React.Component {
         currentCow: cow
       })
     }
+  }
+
+  updateElement(cow) {
+    let id = cow.id;
+    let newName = prompt('Enter new name');
+    let newDescription = prompt('Enter new description ');
+    let newCow = {
+      id: id,
+      name: newName,
+      description: newDescription
+    };
+
+    let newCowList = this.state.cowList.slice();
+
+    let cowPosition;
+    for ( let i = 0; i < newCowList.length; i++ ) {
+      if ( id === newCowList[i].id ) {
+        cowPosition = i;
+        break;
+      }
+    }
+
+    eventHandlers.updateCow(newCow)
+    .then(() => {
+      newCowList[cowPosition] = newCow;
+      this.setState({
+        cowList: newCowList
+      })
+    })
+    .catch(error => console.log(error))
+
   }
 
   deleteElement (cow) {
@@ -78,7 +111,7 @@ class App extends React.Component {
         <h1>The Cows</h1>
         <Form handleSubmit={this.handleSubmit}/>
         <CowDisplayer cow={this.state.currentCow} />
-        <List cowList={this.state.cowList} handleClick={this.handleClick} deleteElement={this.deleteElement} />
+        <List cowList={this.state.cowList} handleClick={this.handleClick} deleteElement={this.deleteElement} updateElement={this.updateElement} />
       </div>
     );
   }

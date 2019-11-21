@@ -23,8 +23,20 @@ module.exports = {
         }
       });
     },
+    put: (req, res) => {
+      let data = req.body
+      models.cows.update(data, (error) => {
+        if (error) {
+          console.log(error);
+          res.sendStatus(404);
+        } else {
+          res.json(data);
+        }
+      })
+    },
     delete: (req, res) => {
-      let id = req.body.id
+      console.log("here")
+      let id = req.params.id
       models.cows.delete(id, (error) => {
         if (error) {
           console.log(error);
